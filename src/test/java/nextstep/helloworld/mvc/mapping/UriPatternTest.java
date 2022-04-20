@@ -1,6 +1,8 @@
 package nextstep.helloworld.mvc.mapping;
 
-import io.restassured.RestAssured;
+import static org.hamcrest.core.Is.*;
+import static org.hamcrest.core.IsNull.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +11,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
+import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UriPatternTest {
@@ -30,13 +31,13 @@ public class UriPatternTest {
     @Test
     void pathVariable() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/uri-pattern/users/1")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body("id", notNullValue())
-                .body("name", notNullValue())
-                .body("email", notNullValue());
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/uri-pattern/users/1")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body("id", notNullValue())
+            .body("name", notNullValue())
+            .body("email", notNullValue());
     }
 
     /**
@@ -47,18 +48,18 @@ public class UriPatternTest {
     @Test
     void pattern() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/uri-pattern/patterns/a")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("pattern"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/uri-pattern/patterns/a")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("pattern"));
 
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/uri-pattern/patterns/b")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("pattern"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/uri-pattern/patterns/b")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("pattern"));
     }
 
     /**
@@ -69,24 +70,24 @@ public class UriPatternTest {
     @Test
     void patternStars() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/uri-pattern/patterns/multi")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("pattern-multi"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/uri-pattern/patterns/multi")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("pattern-multi"));
 
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/uri-pattern/patterns/all")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("pattern-multi"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/uri-pattern/patterns/all")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("pattern-multi"));
 
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/uri-pattern/patterns/all/names")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("pattern-multi"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/uri-pattern/patterns/all/names")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("pattern-multi"));
     }
 }

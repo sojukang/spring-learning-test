@@ -1,6 +1,7 @@
 package nextstep.helloworld.mvc.exceptions;
 
-import io.restassured.RestAssured;
+import static org.hamcrest.core.Is.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import static org.hamcrest.core.Is.is;
+import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ExceptionTest {
@@ -29,11 +30,11 @@ public class ExceptionTest {
     @Test
     void exceptionHandler() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/exceptions/hello")
-                .then().log().all()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body(is("CustomException"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/exceptions/hello")
+            .then().log().all()
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .body(is("CustomException"));
     }
 
     /**
@@ -43,10 +44,10 @@ public class ExceptionTest {
     @Test
     void controllerAdvice() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/exceptions/hi")
-                .then().log().all()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body(is("HelloException"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/exceptions/hi")
+            .then().log().all()
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .body(is("HelloException"));
     }
 }

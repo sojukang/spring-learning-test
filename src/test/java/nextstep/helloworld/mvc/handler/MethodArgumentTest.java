@@ -1,7 +1,7 @@
 package nextstep.helloworld.mvc.handler;
 
-import io.restassured.RestAssured;
-import nextstep.helloworld.mvc.domain.User;
+import static org.hamcrest.core.Is.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import static org.hamcrest.core.Is.is;
+import io.restassured.RestAssured;
+import nextstep.helloworld.mvc.domain.User;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MethodArgumentTest {
@@ -34,12 +35,12 @@ public class MethodArgumentTest {
     void requestParam() {
         String name = "hello";
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/method-argument/users?name={name}", name)
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body("size()", is(2))
-                .body("[0].name", is(name));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/method-argument/users?name={name}", name)
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body("size()", is(2))
+            .body("[0].name", is(name));
     }
 
     /**
@@ -53,13 +54,13 @@ public class MethodArgumentTest {
         User user = new User("이름", "email@email.com");
 
         RestAssured.given().log().all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(user)
-                .when().post("/method-argument/users/body")
-                .then().log().all()
-                .statusCode(HttpStatus.CREATED.value())
-                .header("Location", "/users/1")
-                .body("name", is("이름"))
-                .body("email", is("email@email.com"));
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(user)
+            .when().post("/method-argument/users/body")
+            .then().log().all()
+            .statusCode(HttpStatus.CREATED.value())
+            .header("Location", "/users/1")
+            .body("name", is("이름"))
+            .body("email", is("email@email.com"));
     }
 }

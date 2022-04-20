@@ -1,6 +1,7 @@
 package nextstep.helloworld.mvc.mapping;
 
-import io.restassured.RestAssured;
+import static org.hamcrest.core.Is.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import static org.hamcrest.core.Is.is;
+import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ParamHeaderTest {
@@ -29,11 +30,11 @@ public class ParamHeaderTest {
     @Test
     void message() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/param-header/message")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("message"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/param-header/message")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("message"));
     }
 
     /**
@@ -44,11 +45,11 @@ public class ParamHeaderTest {
     @Test
     void messageForParam() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/param-header/message?name=hello")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("hello"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/param-header/message?name=hello")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("hello"));
     }
 
     /**
@@ -59,11 +60,11 @@ public class ParamHeaderTest {
     @Test
     void messageForHeader() {
         RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("HEADER", "hi")
-                .when().get("/param-header/message")
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("hi"));
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .header("HEADER", "hi")
+            .when().get("/param-header/message")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body(is("hi"));
     }
 }
