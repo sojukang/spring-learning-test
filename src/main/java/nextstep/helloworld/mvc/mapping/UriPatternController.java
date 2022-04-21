@@ -20,14 +20,14 @@ public class UriPatternController {
     }
 
     @RequestMapping(
-        value = {"/patterns/?"}
+        value = "/patterns/?"
     )
     public ResponseEntity<String> pattern() {
         return ResponseEntity.ok().body("pattern");
     }
 
     @RequestMapping(
-        value = {"/patterns/multi", "/patterns/all", "/patterns/all/*"}
+        value = "/patterns/**"
     )
     public ResponseEntity<String> patternStars() {
         return ResponseEntity.ok().body("pattern-multi");

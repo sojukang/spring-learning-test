@@ -63,4 +63,16 @@ public class MethodArgumentTest {
             .body("name", is("이름"))
             .body("email", is("email@email.com"));
     }
+
+    @DisplayName("model attribute with query params test")
+    @Test
+    void modelAttributeTestWithQueryParams() {
+        RestAssured.given().log().all()
+            .when().post("/method-argument/users/model-attribute-param?id=1&name=hello&email=emailil")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .body("id", is(1))
+            .body("email", is("emailil"))
+            .body("name", is("hello"));
+    }
 }

@@ -5,7 +5,7 @@ public class User {
     private String name;
     private String email;
 
-    public User() {
+    private User() {
     }
 
     public User(String name, String email) {
@@ -30,5 +30,4 @@ public class User {
     public String getEmail() {
         return email;
     }
-
 }

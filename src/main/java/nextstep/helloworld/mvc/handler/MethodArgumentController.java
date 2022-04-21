@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,4 +37,9 @@ public class MethodArgumentController {
         return ResponseEntity.created(URI.create("/users/" + newUser.getId())).body(newUser);
     }
 
+    @PostMapping("/users/model-attribute-param")
+    public ResponseEntity testModelAttributeWithQueryParams(@ModelAttribute User user) {
+        // User newUser = new User(user.getId(), user.getName(), user.getEmail());
+        return ResponseEntity.ok(user);
+    }
 }

@@ -13,6 +13,7 @@ import nextstep.helloworld.mvc.exceptions.exception.HelloException;
 @RequestMapping("/exceptions")
 public class ExceptionsController {
 
+    @GetMapping("/hello")
     public ResponseEntity exceptionHandler() {
         throw new CustomException();
     }
@@ -22,7 +23,6 @@ public class ExceptionsController {
         throw new HelloException();
     }
 
-    @GetMapping("/hello")
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<String> handle() {
         return ResponseEntity.badRequest().body("CustomException");
