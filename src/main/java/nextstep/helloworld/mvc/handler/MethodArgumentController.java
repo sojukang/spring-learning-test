@@ -42,4 +42,12 @@ public class MethodArgumentController {
         // User newUser = new User(user.getId(), user.getName(), user.getEmail());
         return ResponseEntity.ok(user);
     }
+
+    /**
+     * 기본생성자의 접근제어자는 상관 없음
+     * 기본생성자 & 그외 생성자 2개 이상 -> 무조건 기본 생성자로 생성하고 setter로 binding
+     * 기본생성자 & 그외 생성자 1개 -> 그 외 생성자로 생성 + 빈 값 setter로 binding
+     * 기본생성자 X & 그 외 생성자 1개 -> 그 외 생성자로 생성 + 빈 값 setter로 binding
+     * 기본생성자 X & 그 외 생성자 2개 이상 -> 기본 생성자 오류 Exception
+     */
 }
