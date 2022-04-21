@@ -1,8 +1,15 @@
 package nextstep.helloworld.jdbc.jdbctemplate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import nextstep.helloworld.jdbc.Customer;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -27,13 +34,14 @@ public class UpdatingDAO {
      */
     public void insert(Customer customer) {
         String sql = "insert into customers (first_name, last_name) values (?, ?)";
+        jdbcTemplate.update(sql, customer.getFirstName(), customer.getLastName());
     }
     /**
      * public int update(String sql, @Nullable Object... args)
      */
     public int delete(Long id) {
         String sql = "delete from customers where id = ?";
-        return 0;
+        return jdbcTemplate.update(sql, id);
     }
 
     /**
@@ -41,6 +49,11 @@ public class UpdatingDAO {
      */
     public Long insertWithKeyHolder(Customer customer) {
         final String sql = "insert into customers (first_name, last_name) values (?, ?)";
-        return null;
+        return Integer.toUnsignedLong(jdbcTemplate.update(con -> {
+            PreparedStatement ret = con.prepareStatement(sql);
+            ret.setString(1, customer.getFirstName());
+            ret.setString(2, customer.getLastName());
+            return ret;
+        }, new GeneratedKeyHolder()));
     }
 }
