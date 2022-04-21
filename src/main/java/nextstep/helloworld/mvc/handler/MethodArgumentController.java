@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import nextstep.helloworld.mvc.domain.MyUser;
 import nextstep.helloworld.mvc.domain.User;
 
 @RestController
@@ -38,7 +39,7 @@ public class MethodArgumentController {
     }
 
     @PostMapping("/users/model-attribute-param")
-    public ResponseEntity testModelAttributeWithQueryParams(@ModelAttribute User user) {
+    public ResponseEntity testModelAttributeWithQueryParams(@ModelAttribute MyUser user) {
         // User newUser = new User(user.getId(), user.getName(), user.getEmail());
         return ResponseEntity.ok(user);
     }
