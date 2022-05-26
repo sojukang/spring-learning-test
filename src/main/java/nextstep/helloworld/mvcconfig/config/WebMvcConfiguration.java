@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
+import nextstep.helloworld.mvcconfig.ui.AuthenticationPrincipalArgumentResolver;
+import nextstep.helloworld.mvcconfig.ui.LoginInterceptor;
+
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
     /**
@@ -17,6 +20,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("hello");
     }
 
     /**
@@ -26,6 +30,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/admin/**");
     }
 
     /**
@@ -35,5 +40,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new AuthenticationPrincipalArgumentResolver());
     }
 }
